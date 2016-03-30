@@ -47,6 +47,14 @@ app.get('/api/todos/search', function search(req, res) {
   /* This endpoint responds with the search results from the
    * query in the request. COMPLETE THIS ENDPOINT LAST.
    */
+   //itirate through the todos array
+   var searchArr = todos.filter(function(todo){
+     //filter records that match he task and description in req.params
+     return (todo.task===req.params.task && todo.description===req.params.desciprtion);
+   });
+   console.log(searchArr);
+  //send the requested todo records
+  res.send(searchArr);
 });
 
 app.get('/api/todos', function index(req, res) {
