@@ -60,19 +60,20 @@ app.post('/api/todos', function create(req, res) {
   /* This endpoint will add a todo to our "database"
    * and respond with the newly created todo.
    */
+   //find maximum id in the todos array
    var maxID=0;
    todos.forEach(function(todo){
      if(todo._id>maxID){
        maxID=todo._id;
      }
    });
-
+   //push the new record into the array. task and description are sent in the body of the HTTP request
    todos.push({_id:maxID+1, task: req.body.task, description: req.body.description});
 
    todos.forEach(function(todo){
-     //check for the idNum
+     //look for the new record (maxID+1)
      if(todo._id===maxID+1){
-       //send the requested todo
+       //send the new todo
        res.send(todo);
      }
    });
@@ -114,6 +115,17 @@ app.delete('/api/todos/:id', function destroy(req, res) {
    * id specified in the route parameter (:id) and respond
    * with success.
    */
+   //convert id string into number
+   var idNum=parseInt(req.params.id);
+   //loop through the array of todos
+   todos.forEach(function(todo, ind){
+     //check for the idNum
+     if(todo._id===idNum){
+       //remove this todo byusing the split method with the index of the requested record
+       todos.splice(ind,1);
+     }
+   });
+   res.send(todos);
 });
 
 /**********
