@@ -108,6 +108,21 @@ app.put('/api/todos/:id', function update(req, res) {
    * id specified in the route parameter (:id) and respond
    * with the newly updated todo.
    */
+   //convert id string into number
+   var idNum = parseInt(req.params.id);
+   //loop through the array of todos
+   todos.forEach(function(todo, ind){
+     //check for the idNum
+     if(todo._id===idNum){
+       //once the requested todo record has been found--> update the task and description from req.body
+        todo.task=req.body.task;
+        todo.description=req.body.description;
+       //send the updated todo
+       res.send(todo);
+     }
+   });
+
+
 });
 
 app.delete('/api/todos/:id', function destroy(req, res) {
